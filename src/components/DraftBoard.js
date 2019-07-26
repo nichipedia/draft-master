@@ -8,27 +8,22 @@ class DraftBoard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			players: {},
+			players: null,
 			drafted: [],
-			picked: [],
+			picked: []
 		};
-	}
-
-	componentWillMount() {
 		broker.getADP()
-		
 		.then(res => {
-			this.setState({
-				players: {
-					RB: res.RB,
-					QB: res.QB,
-					TE: res.TE,
-					PK: res.TK,
-					WR: res.WR,
-					DEF: res.DEF
-				}
-			});
-			console.log(res.RB);
+			let adpPlayers = {
+				RB: res.RB,
+				QB: res.QB,
+				TE: res.TE,
+				PK: res.TK,
+				WR: res.WR,
+				DEF: res.DEF
+			};
+			this.state.players = {adpPlayers};
+			console.log(this.state.players);
 		})
 		.catch(err => {
 			console.log(err);

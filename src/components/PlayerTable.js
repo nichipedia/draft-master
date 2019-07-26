@@ -10,7 +10,8 @@ class PlayerTable extends Component {
 
 	render() {
 		let data = [];
-		this.props.players.forEach((player) => {
+		const {players} = this.props;
+		players.forEach((player) => {
 			data.push({
 				picked: () => (
 					<input
