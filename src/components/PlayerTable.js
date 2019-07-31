@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactTable from 'react-table';
+import Checkbox from '@material-ui/core/Checkbox';
 import "react-table/react-table.css"
 
 
@@ -7,48 +8,76 @@ class PlayerTable extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { picked: {}, drafted: {}};
-
 		this.toggleDrafted = this.toggleDrafted.bind(this);
 		this.togglePicked = this.togglePicked.bind(this);
 	}
 
 	togglePicked(name) {
-		const newSelected = Object.assign({}, this.state.picked);
-		newSelected[name] = !this.state.picked[name];
-		this.setState({
-			picked: newSelected
-		});
+		if (!this.props.drafted[name]) {
+			this.props.togglePick(name);
+		}
 	}
 
-	toggleDrafted(name) {
-		const newSelected = Object.assign({}, this.state.drafted);
-		newSelected[name] = !this.state.drafted[name];
-		this.setState({
-			drafted: newSelected
-		});
+	toggleDrafted(name, pos, team, bye) {
+		if (!this.props.picked[name]) {
+			this.props.toggleDraft(name, pos, team, bye);
+		}
 	}
 
 	rowFn = (state, rowInfo, column, instance) => {
-    const { picked } = this.state;
-    console.log(rowInfo);
-    return {
-	      onClick: (e, handleOriginal) => {
-	        console.log("It was in this row:", rowInfo);
-
-	        // IMPORTANT! React-Table uses onClick internally to trigger
-	        // events like expanding SubComponents and pivots.
-	        // By default a custom 'onClick' handler will override this functionality.
-	        // If you want to fire the original onClick handler, call the
-	        // 'handleOriginal' function.
-	        if (handleOriginal) {
-	          handleOriginal();
-	        }
-	      },
-	      style: {
-	        
-	      }
-	    };
+	    if (rowInfo && this.props.drafted[rowInfo.original.name]) {
+		    return {
+			    onClick: (e, handleOriginal) => {
+			        // IMPORTANT! React-Table uses onClick internally to trigger
+			        // events like expanding SubComponents and pivots.
+			        // By default a custom 'onClick' handler will override this functionality.
+			        // If you want to fire the original onClick handler, call the
+			        // 'handleOriginal' function.
+			        this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+				    if (handleOriginal) {
+			    	    handleOriginal();
+			      	}
+			    },
+			    style: {
+			    	background: 'lightgreen'
+			    }
+			};	
+	    } else if (rowInfo && this.props.picked[rowInfo.original.name]) {
+	    	return {
+			    onClick: (e, handleOriginal) => {
+			        // IMPORTANT! React-Table uses onClick internally to trigger
+			        // events like expanding SubComponents and pivots.
+			        // By default a custom 'onClick' handler will override this functionality.
+			        // If you want to fire the original onClick handler, call the
+			        // 'handleOriginal' function.
+			         this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+				    if (handleOriginal) {
+			    	    handleOriginal();
+			      	}
+			    },
+			    style: {
+			    	background: 'red'
+			    }
+			};
+	    } else {
+	    	return {
+			    onClick: (e, handleOriginal) => {
+			        // IMPORTANT! React-Table uses onClick internally to trigger
+			        // events like expanding SubComponents and pivots.
+			        // By default a custom 'onClick' handler will override this functionality.
+			        // If you want to fire the original onClick handler, call the
+			        // 'handleOriginal' function.
+			         this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+				    if (handleOriginal) {
+			    	    handleOriginal();
+			      	}
+			    },
+			    style: {
+			    	background: 'white'
+			    }
+			};
+	    }
+	    
 	  };
 
 
@@ -69,11 +98,10 @@ class PlayerTable extends Component {
 			Header: "Picked",
 			Cell: ({ original }) => {
 				return (
-					<input
-						type="checkbox"
-						className="checkbox"
-						checked={this.state.picked[original.name] === true}
+					<Checkbox
+						checked={this.props.picked[original.name] === true}
 						onChange={() => this.togglePicked(original.name)}
+						color="default"
 					/>
 				);
 			}
@@ -83,11 +111,10 @@ class PlayerTable extends Component {
 			Header: "Drafted",
 			Cell: ({ original }) => {
 				return (
-					<input
-						type="checkbox"
-						className="checkbox"
-						checked={this.state.drafted[original.name] === true}
-						onChange={() => this.toggleDrafted(original.name)}
+					<Checkbox
+						checked={this.props.drafted[original.name] === true}
+						onChange={() => this.toggleDrafted(original.name, this.props.pos, original.team, original.bye)}
+						color="default"
 					/>
 				);
 			}
