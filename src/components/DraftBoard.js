@@ -107,9 +107,9 @@ class DraftBoard extends Component {
 					<Box m={1}>
 						<PlayerInfoModal open={this.state.playerInfo.open} playerInfo={this.state.playerInfo} onClose={this.closePlayerInfo}/>
 						<Grid container>
-						   	<Grid item lg={10}>
+						   	<Grid item md={10}>
 						   		<Grid container>
-						   			<Grid item lg={4}>
+						   			<Grid item md={4}>
 						   				<Paper>
 						   					<Paper style={{backgroundColor: '#f44336'}}>Running Backs</Paper>
 											<PlayerTable players={this.state.players.RB} 
@@ -121,7 +121,7 @@ class DraftBoard extends Component {
 											displayInfo={this.displayPlayerInfo}/>
 										</Paper>
 									</Grid>
-									<Grid item lg={4}>
+									<Grid item md={4}>
 										<Paper>
 											<Paper style={{backgroundColor: '#2196f3'}}>Wide Recievers</Paper>
 											<PlayerTable players={this.state.players.WR} 
@@ -133,7 +133,7 @@ class DraftBoard extends Component {
 											displayInfo={this.displayPlayerInfo}/>
 										</Paper>
 									</Grid>
-									<Grid item lg={4}>
+									<Grid item md={4}>
 										<Paper>
 											<Paper style={{backgroundColor: '#009688'}}>Quater Backs</Paper>
 											<PlayerTable players={this.state.players.QB} 
@@ -147,7 +147,7 @@ class DraftBoard extends Component {
 									</Grid>
 								</Grid>
 								<Grid container>
-									<Grid item lg={4}>
+									<Grid item md={4}>
 										<Paper>
 											<Paper style={{backgroundColor: '#8bc34a'}}>Tight Ends</Paper>
 											<PlayerTable players={this.state.players.TE} 
@@ -159,7 +159,7 @@ class DraftBoard extends Component {
 											displayInfo={this.displayPlayerInfo}/>
 										</Paper>
 									</Grid>
-									<Grid item lg={4}>
+									<Grid item md={4}>
 										<Paper>
 											<Paper style={{backgroundColor: '#ff9800'}}>Kickers</Paper>
 											<PlayerTable players={this.state.players.PK} 
@@ -171,7 +171,7 @@ class DraftBoard extends Component {
 											displayInfo={this.displayPlayerInfo}/>
 										</Paper>
 									</Grid>
-									<Grid item lg={4}>
+									<Grid item md={4}>
 										<Paper>
 											<Paper style={{backgroundColor: '#795548'}}>Defense</Paper>
 											<PlayerTable players={this.state.players.DEF} 
@@ -185,7 +185,7 @@ class DraftBoard extends Component {
 									</Grid>
 								</Grid>	
 							</Grid>
-							<Grid item lg={2}>
+							<Grid item md={2}>
 								<Paper>My Team</Paper>
 								<DraftedPlayers draftedPlayers={this.state.draftedPlayers}/>
 							</Grid>

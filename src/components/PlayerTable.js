@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import ReactTable from 'react-table';
 import Checkbox from '@material-ui/core/Checkbox';
-import "react-table/react-table.css"
-
+import "react-table/react-table.css";
 
 class PlayerTable extends Component {
 
@@ -24,6 +23,25 @@ class PlayerTable extends Component {
 		}
 	}
 
+	tdFn = (state, rowInfo, column, instance) => {
+		return {
+	      onClick: (e, handleOriginal) => {
+	        // IMPORTANT! React-Table uses onClick internally to trigger
+	        // events like expanding SubComponents and pivots.
+	        // By default a custom 'onClick' handler will override this functionality.
+	        // If you want to fire the original onClick handler, call the
+	        // 'handleOriginal' function.
+	        if (column.Header === 'Name') {
+	        	this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+	        }
+	        if (handleOriginal) {
+	          handleOriginal()
+	        }
+	      }
+		}
+	}
+
+
 	rowFn = (state, rowInfo, column, instance) => {
 	    if (rowInfo && this.props.drafted[rowInfo.original.name]) {
 		    return {
@@ -33,7 +51,7 @@ class PlayerTable extends Component {
 			        // By default a custom 'onClick' handler will override this functionality.
 			        // If you want to fire the original onClick handler, call the
 			        // 'handleOriginal' function.
-			        this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+			        //this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
 				    if (handleOriginal) {
 			    	    handleOriginal();
 			      	}
@@ -50,7 +68,7 @@ class PlayerTable extends Component {
 			        // By default a custom 'onClick' handler will override this functionality.
 			        // If you want to fire the original onClick handler, call the
 			        // 'handleOriginal' function.
-			         this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+			        //this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
 				    if (handleOriginal) {
 			    	    handleOriginal();
 			      	}
@@ -67,7 +85,7 @@ class PlayerTable extends Component {
 			        // By default a custom 'onClick' handler will override this functionality.
 			        // If you want to fire the original onClick handler, call the
 			        // 'handleOriginal' function.
-			         this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+			        //this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
 				    if (handleOriginal) {
 			    	    handleOriginal();
 			      	}
@@ -77,9 +95,7 @@ class PlayerTable extends Component {
 			    }
 			};
 	    }
-	    
 	  };
-
 
 	render() {
 		let data = [];
@@ -129,7 +145,7 @@ class PlayerTable extends Component {
 			accessor: 'bye'
 		}];
 
-		return <ReactTable data={data} columns={columns} getTrProps={this.rowFn}/>
+		return <ReactTable data={data} columns={columns} getTrProps={this.rowFn} getTdProps={this.tdFn}/>
 	}
 }
 export default PlayerTable;
