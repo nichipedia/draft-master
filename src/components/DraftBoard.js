@@ -55,8 +55,8 @@ class DraftBoard extends Component {
 		this.closePlayerInfo = this.closePlayerInfo.bind(this);
 	}
 
-	displayPlayerInfo(name, team) {
-		this.setState({playerInfo: {open: true, name: name, team: team}});
+	displayPlayerInfo(name, team, pos) {
+		this.setState({playerInfo: {open: true, name: name, team: team, pos: pos}});
 	}
 
 	closePlayerInfo() {
@@ -86,7 +86,6 @@ class DraftBoard extends Component {
 				drafted: newSelected,
 				draftedPlayers: draftedClone
 			});
-			console.log(this.state.draftedPlayers);
 		}
 	}
 
@@ -110,78 +109,90 @@ class DraftBoard extends Component {
 						   	<Grid item md={10}>
 						   		<Grid container>
 						   			<Grid item md={4}>
-						   				<Paper>
-						   					<Paper style={{backgroundColor: '#f44336'}}>Running Backs</Paper>
-											<PlayerTable players={this.state.players.RB} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"RB"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+						   				<Box m={1}>
+							   				<Paper>
+							   					<Paper style={{backgroundColor: '#f44336'}}>Running Backs</Paper>
+												<PlayerTable players={this.state.players.RB} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"RB"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 									<Grid item md={4}>
-										<Paper>
-											<Paper style={{backgroundColor: '#2196f3'}}>Wide Recievers</Paper>
-											<PlayerTable players={this.state.players.WR} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"WR"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+										<Box m={1}>
+											<Paper>
+												<Paper style={{backgroundColor: '#2196f3'}}>Wide Recievers</Paper>
+												<PlayerTable players={this.state.players.WR} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"WR"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 									<Grid item md={4}>
-										<Paper>
-											<Paper style={{backgroundColor: '#009688'}}>Quater Backs</Paper>
-											<PlayerTable players={this.state.players.QB} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"QB"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+										<Box m={1}>
+											<Paper>
+												<Paper style={{backgroundColor: '#009688'}}>Quater Backs</Paper>
+												<PlayerTable players={this.state.players.QB} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"QB"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 								</Grid>
 								<Grid container>
 									<Grid item md={4}>
-										<Paper>
-											<Paper style={{backgroundColor: '#8bc34a'}}>Tight Ends</Paper>
-											<PlayerTable players={this.state.players.TE} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"TE"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+										<Box m={1}>
+											<Paper>
+												<Paper style={{backgroundColor: '#8bc34a'}}>Tight Ends</Paper>
+												<PlayerTable players={this.state.players.TE} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"TE"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 									<Grid item md={4}>
-										<Paper>
-											<Paper style={{backgroundColor: '#ff9800'}}>Kickers</Paper>
-											<PlayerTable players={this.state.players.PK} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"PK"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+										<Box m={1}>
+											<Paper>
+												<Paper style={{backgroundColor: '#ff9800'}}>Kickers</Paper>
+												<PlayerTable players={this.state.players.PK} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"PK"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 									<Grid item md={4}>
-										<Paper>
-											<Paper style={{backgroundColor: '#795548'}}>Defense</Paper>
-											<PlayerTable players={this.state.players.DEF} 
-											togglePick={this.pickPlayer} 
-											toggleDraft={this.draftPlayer}
-											picked={this.state.picked}
-											drafted={this.state.drafted}
-											pos={"DEF"}
-											displayInfo={this.displayPlayerInfo}/>
-										</Paper>
+										<Box m={1}>
+											<Paper>
+												<Paper style={{backgroundColor: '#795548'}}>Defense</Paper>
+												<PlayerTable players={this.state.players.DEF} 
+												togglePick={this.pickPlayer} 
+												toggleDraft={this.draftPlayer}
+												picked={this.state.picked}
+												drafted={this.state.drafted}
+												pos={"DEF"}
+												displayInfo={this.displayPlayerInfo}/>
+											</Paper>
+										</Box>
 									</Grid>
 								</Grid>	
 							</Grid>

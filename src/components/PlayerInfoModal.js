@@ -31,7 +31,7 @@ class PlayerInfoModal extends Component {
 
 	getPlayerInfo() {
 		if (this.props.playerInfo.name != null) {
-			console.log(this.props.playerInfo.name);
+			console.log(this.props.playerInfo);
 			broker.getPlayerStats(this.props.playerInfo)
 			.then(res => {
 				this.setState({info: res});
@@ -104,11 +104,10 @@ class PlayerInfoModal extends Component {
 		} else {
 			if (this.props.playerInfo.name != null) {
 				this.getPlayerInfo();
-				console.log('mer');
 			}
 			return (
 				<div>
-					<Dialog open={this.props.open} onClose={this.handleClose}>
+					<Dialog open={this.props.open} onClose={this.props.onClose}>
 					    <DialogTitle id="alert-dialog-title">Player Info!</DialogTitle>
 					    <DialogContent>
 						    	<CircularProgress />

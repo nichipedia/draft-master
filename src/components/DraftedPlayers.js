@@ -21,12 +21,13 @@ class DraftedPlayers extends Component {
 		            <TableCell>Name</TableCell>
 		            <TableCell>Pos</TableCell>
 		            <TableCell>Bye</TableCell>
+		            <TableCell>Team</TableCell>
 		          </TableRow>
 		        </TableHead>
 		         <TableBody>
 		          {this.props.draftedPlayers.map(row => (
 		            <TableRow key={row.name}>
-		              <TableCell component="th" scope="row">
+		              <TableCell>
 		                {row.name}
 		              </TableCell>
 		              <TableCell align="right">{row.pos}</TableCell>

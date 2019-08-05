@@ -32,7 +32,7 @@ class PlayerTable extends Component {
 	        // If you want to fire the original onClick handler, call the
 	        // 'handleOriginal' function.
 	        if (column.Header === 'Name') {
-	        	this.props.displayInfo(rowInfo.original.name, rowInfo.original.team);
+	        	this.props.displayInfo(rowInfo.original.name, rowInfo.original.team, this.props.pos);
 	        }
 	        if (handleOriginal) {
 	          handleOriginal()
