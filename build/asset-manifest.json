@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "housemoran.tech/static/css/main.4575ae16.chunk.css",
-    "main.js": "housemoran.tech/static/js/main.094588d7.chunk.js",
-    "main.js.map": "housemoran.tech/static/js/main.094588d7.chunk.js.map",
-    "runtime~main.js": "housemoran.tech/static/js/runtime~main.72773def.js",
-    "runtime~main.js.map": "housemoran.tech/static/js/runtime~main.72773def.js.map",
-    "static/css/2.d4b275d9.chunk.css": "housemoran.tech/static/css/2.d4b275d9.chunk.css",
-    "static/js/2.9a54d889.chunk.js": "housemoran.tech/static/js/2.9a54d889.chunk.js",
-    "static/js/2.9a54d889.chunk.js.map": "housemoran.tech/static/js/2.9a54d889.chunk.js.map",
-    "index.html": "housemoran.tech/index.html",
-    "precache-manifest.875350ad31d70d1f643bcd85dddd94ab.js": "housemoran.tech/precache-manifest.875350ad31d70d1f643bcd85dddd94ab.js",
-    "service-worker.js": "housemoran.tech/service-worker.js",
-    "static/css/2.d4b275d9.chunk.css.map": "housemoran.tech/static/css/2.d4b275d9.chunk.css.map",
-    "static/css/main.4575ae16.chunk.css.map": "housemoran.tech/static/css/main.4575ae16.chunk.css.map",
-    "static/media/logo.svg": "housemoran.tech/static/media/logo.5d5d9eef.svg"
+    "main.css": "www.housemoran.tech/draft/build/static/css/main.4575ae16.chunk.css",
+    "main.js": "www.housemoran.tech/draft/build/static/js/main.094588d7.chunk.js",
+    "main.js.map": "www.housemoran.tech/draft/build/static/js/main.094588d7.chunk.js.map",
+    "runtime~main.js": "www.housemoran.tech/draft/build/static/js/runtime~main.0168462a.js",
+    "runtime~main.js.map": "www.housemoran.tech/draft/build/static/js/runtime~main.0168462a.js.map",
+    "static/css/2.d4b275d9.chunk.css": "www.housemoran.tech/draft/build/static/css/2.d4b275d9.chunk.css",
+    "static/js/2.eab33856.chunk.js": "www.housemoran.tech/draft/build/static/js/2.eab33856.chunk.js",
+    "static/js/2.eab33856.chunk.js.map": "www.housemoran.tech/draft/build/static/js/2.eab33856.chunk.js.map",
+    "index.html": "www.housemoran.tech/draft/build/index.html",
+    "precache-manifest.229296c0aab3f48a4ff98c03f620fcd8.js": "www.housemoran.tech/draft/build/precache-manifest.229296c0aab3f48a4ff98c03f620fcd8.js",
+    "service-worker.js": "www.housemoran.tech/draft/build/service-worker.js",
+    "static/css/2.d4b275d9.chunk.css.map": "www.housemoran.tech/draft/build/static/css/2.d4b275d9.chunk.css.map",
+    "static/css/main.4575ae16.chunk.css.map": "www.housemoran.tech/draft/build/static/css/main.4575ae16.chunk.css.map",
+    "static/media/logo.svg": "www.housemoran.tech/draft/build/static/media/logo.5d5d9eef.svg"
   }
 }
