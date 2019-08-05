@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "www.housemoran.tech/draft/build/static/css/main.4575ae16.chunk.css",
-    "main.js": "www.housemoran.tech/draft/build/static/js/main.094588d7.chunk.js",
-    "main.js.map": "www.housemoran.tech/draft/build/static/js/main.094588d7.chunk.js.map",
-    "runtime~main.js": "www.housemoran.tech/draft/build/static/js/runtime~main.0168462a.js",
-    "runtime~main.js.map": "www.housemoran.tech/draft/build/static/js/runtime~main.0168462a.js.map",
-    "static/css/2.d4b275d9.chunk.css": "www.housemoran.tech/draft/build/static/css/2.d4b275d9.chunk.css",
-    "static/js/2.eab33856.chunk.js": "www.housemoran.tech/draft/build/static/js/2.eab33856.chunk.js",
-    "static/js/2.eab33856.chunk.js.map": "www.housemoran.tech/draft/build/static/js/2.eab33856.chunk.js.map",
-    "index.html": "www.housemoran.tech/draft/build/index.html",
-    "precache-manifest.229296c0aab3f48a4ff98c03f620fcd8.js": "www.housemoran.tech/draft/build/precache-manifest.229296c0aab3f48a4ff98c03f620fcd8.js",
-    "service-worker.js": "www.housemoran.tech/draft/build/service-worker.js",
-    "static/css/2.d4b275d9.chunk.css.map": "www.housemoran.tech/draft/build/static/css/2.d4b275d9.chunk.css.map",
-    "static/css/main.4575ae16.chunk.css.map": "www.housemoran.tech/draft/build/static/css/main.4575ae16.chunk.css.map",
-    "static/media/logo.svg": "www.housemoran.tech/draft/build/static/media/logo.5d5d9eef.svg"
+    "main.css": "/static/css/main.4575ae16.chunk.css",
+    "main.js": "/static/js/main.094588d7.chunk.js",
+    "main.js.map": "/static/js/main.094588d7.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.d4b275d9.chunk.css": "/static/css/2.d4b275d9.chunk.css",
+    "static/js/2.04cd04e3.chunk.js": "/static/js/2.04cd04e3.chunk.js",
+    "static/js/2.04cd04e3.chunk.js.map": "/static/js/2.04cd04e3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.803ed761e4c22ba5af73058a276080b0.js": "/precache-manifest.803ed761e4c22ba5af73058a276080b0.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.d4b275d9.chunk.css.map": "/static/css/2.d4b275d9.chunk.css.map",
+    "static/css/main.4575ae16.chunk.css.map": "/static/css/main.4575ae16.chunk.css.map",
+    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
   }
 }
