@@ -17,6 +17,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
 import {Bar, Line, Doughnut, Radar} from 'react-chartjs-2';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 const broker = require('adp-scraper');
 
  
@@ -478,8 +479,8 @@ class PlayerInfoModal extends Component {
 							    						label: 'Passing Touchdowns',
 							    						fill: false,
 												        lineTension: 0.1,
-												        backgroundColor: 'rgba(75,192,192,0.4)',
-												        borderColor: 'rgba(75,192,192,1)',
+												        backgroundColor: '#00796b',
+												        borderColor: '#00695c',
 												        borderCapStyle: 'butt',
 												        borderDash: [],
 												        borderDashOffset: 0.0,
@@ -502,8 +503,8 @@ class PlayerInfoModal extends Component {
 							    						label: 'Passing Yards',
 							    						fill: false,
 												        lineTension: 0.1,
-												        backgroundColor: 'rgba(75,192,192,0.4)',
-												        borderColor: 'rgba(75,192,192,1)',
+												        backgroundColor: '#00796b',
+												        borderColor: '#00695c',
 												        borderCapStyle: 'butt',
 												        borderDash: [],
 												        borderDashOffset: 0.0,
@@ -526,8 +527,8 @@ class PlayerInfoModal extends Component {
 							    						label: 'QBR',
 							    						fill: false,
 												        lineTension: 0.1,
-												        backgroundColor: 'rgba(75,192,192,0.4)',
-												        borderColor: 'rgba(75,192,192,1)',
+												        backgroundColor: fade('#00bfa5', 0.4),
+												        borderColor: '#00bfa5',
 												        borderCapStyle: 'butt',
 												        borderDash: [],
 												        borderDashOffset: 0.0,
@@ -548,19 +549,19 @@ class PlayerInfoModal extends Component {
 							    					labels: gameLabels,
 							    					datasets: [{
 							    						label: 'Times Sacked',
-							    						backgroundColor: 'rgba(255,99,132,0.2)',
-												        borderColor: 'rgba(255,99,132,1)',
+							    						backgroundColor: fade('#ffeb3b', 0.4),
+												        borderColor: '#ffeb3b',
 												        borderWidth: 1,
-												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-												        hoverBorderColor: 'rgba(255,99,132,1)',
+												        backgroundColor: fade('#fbc02d', 0.4),
+      													borderColor: '#fbc02d',
 							    						data: perGameSacked						 
 							    					}, {
 							    						label: 'Times Picked',
-							    						backgroundColor: 'rgba(75,192,192,0.4)',
-      													borderColor: 'rgba(75,192,192,1)',
+							    						backgroundColor: fade('#00695c', 0.4),
+      													borderColor: '#00695c',
 												        borderWidth: 1,
-												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-												        hoverBorderColor: 'rgba(75,192,192,1)',
+												        hoverBackgroundColor: fade('#004d40', 0.4),
+												        hoverBorderColor: '#004d40',
 							    						data: perGamePicks						 
 							    					}]
 							    				};
@@ -576,8 +577,8 @@ class PlayerInfoModal extends Component {
 							    						data: perGameRushTds
 							    					}, {
 							    						label: 'Passing Touchdowns',
-							    						backgroundColor: 'rgba(75,192,192,0.4)',
-      													borderColor: 'rgba(75,192,192,1)',
+							    						backgroundColor: fade('#80cbc4', 0.4),
+      													borderColor: '#80cbc4',
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
 												        hoverBorderColor: 'rgba(75,192,192,1)',
@@ -596,8 +597,8 @@ class PlayerInfoModal extends Component {
 							    						data: perGameRushYards						 
 							    					}, {
 							    						label: 'Passing Yards',
-							    						backgroundColor: 'rgba(75,192,192,0.4)',
-      													borderColor: 'rgba(75,192,192,1)',
+							    						backgroundColor: fade('#80cbc4', 0.4),
+      													borderColor: '#80cbc4',
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
 												        hoverBorderColor: 'rgba(75,192,192,1)',
@@ -672,12 +673,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: extra,
 														backgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#424242',
+														'#ff9100',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#212121',
+														'#ff6d00',
 														]
 													}]
 												};	
@@ -686,12 +687,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: chips,
 														backgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#424242',
+														'#f57c00',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#212121',
+														'#ef6c00',
 														]
 													}]
 												};	
@@ -700,12 +701,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: twenties,
 														backgroundColor: [
-														'gray',
-														'blue'
+														'#424242',
+														'#f57c00',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'blue'
+														'#212121',
+														'#ef6c00',
 														]
 													}]
 												};	
@@ -714,12 +715,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: thirties,
 														backgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#424242',
+														'#f57c00',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#212121',
+														'#ef6c00',
 														]
 													}]
 												};	
@@ -728,12 +729,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: fourties,
 														backgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#424242',
+														'#f57c00',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#212121',
+														'#ef6c00',
 														]
 													}]
 												};	
@@ -742,12 +743,12 @@ class PlayerInfoModal extends Component {
 													datasets: [{
 														data: fifties,
 														backgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#424242',
+														'#f57c00',
 														],
 														hoverBackgroundColor: [
-														'gray',
-														'#36A2EB',
+														'#212121',
+														'#ef6c00',
 														]
 													}]
 												};	
@@ -794,19 +795,19 @@ class PlayerInfoModal extends Component {
 							    					labels: gameLabels,
 							    					datasets: [{
 							    						label: 'Interceptions',
-							    						backgroundColor: 'rgba(255,99,132,0.2)',
-												        borderColor: 'rgba(255,99,132,1)',
+							    						backgroundColor: fade('#5c6bc0', 0.4),
+												        borderColor: '#5c6bc0',
 												        borderWidth: 1,
-												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-												        hoverBorderColor: 'rgba(255,99,132,1)',
+												        hoverBackgroundColor: fade('#3f51b5', 0.4),
+												        hoverBorderColor: '#3f51b5',
 							    						data: picks						 
 							    					}, {
 							    						label: 'Sacks',
-							    						backgroundColor: 'rgba(75,192,192,0.4)',
-      													borderColor: 'rgba(75,192,192,1)',
+							    						backgroundColor: fade('#4527a0', 0.4),
+      													borderColor: '#4527a0',
 												        borderWidth: 1,
-												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-												        hoverBorderColor: 'rgba(75,192,192,1)',
+												        hoverBackgroundColor: fade('#311b92', 0.4),
+												        hoverBorderColor: '#311b92',
 							    						data: sacks						 
 							    					}]
 							    				};
@@ -839,8 +840,8 @@ class PlayerInfoModal extends Component {
 							    					labels: gameLabels,
 							    					datasets: [  {
 												    	label: 'Points Allowed',
-												      	backgroundColor: 'rgba(179,181,198,0.2)',
-												      	borderColor: 'rgba(179,181,198,1)',
+												      	backgroundColor: fade('#512da8', 0.4),
+      													borderColor: '#512da8',
 												      	pointBackgroundColor: 'rgba(179,181,198,1)',
 												      	pointBorderColor: '#fff',
 												      	pointHoverBackgroundColor: '#fff',
