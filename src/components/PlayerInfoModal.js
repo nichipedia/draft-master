@@ -16,7 +16,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
-import {Bar, Line, Doughnut} from 'react-chartjs-2';
+import {Bar, Line, Doughnut, Radar} from 'react-chartjs-2';
 const broker = require('adp-scraper');
 
  
@@ -26,17 +26,19 @@ class PlayerInfoModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			info: null
+			info: null,
+			logs: null
 		};
 	}
 
 	getPlayerInfo() {
 		if (this.props.playerInfo.name != null) {
 			console.log(this.props.playerInfo);
-			broker.getPlayerStats(this.props.playerInfo)
+			Promise.all([broker.getPlayerStats(this.props.playerInfo), broker.getPlayerGameLogs(this.props.playerInfo)])
 			.then(res => {
-				this.setState({info: res});
-				console.log(res);
+				this.setState({info: res[0], logs: res[1]});
+				console.log(res[0]);
+				console.log(res[1]);
 			})
 			.catch(err => {
 				console.log(err);
@@ -72,6 +74,7 @@ class PlayerInfoModal extends Component {
 						    		</Grid>
 						    		<Grid item md={10}>
 						    			<Paper>
+						    				<h1>2018 Summary</h1>
 						    				<Table>
 						    					<TableHead>
 							    					{ (() => {
@@ -181,20 +184,32 @@ class PlayerInfoModal extends Component {
 						    	</Grid>
 						    		{ 	(() => {
 						    				if (this.props.playerInfo.pos === 'RB') {
-							    				let labels = [];
-							    				let rushTds = [];
-							    				let recievingTds = [];
-							    				let rushYards = [];
-							    				let recievingYards = [];
+							    				let yearLabels = [];
+							    				let yearRushTds = [];
+							    				let yearRecievingTds = [];
+							    				let yearRushYards = [];
+							    				let yearRecievingYards = [];
 							    				this.state.info.career.forEach(year => {
-							    					labels.push(year.season);
-							    					rushTds.push(parseFloat(year.skills[0].touchdowns));
-							    					recievingTds.push(parseFloat(year.skills[1].touchdowns));
-							    					rushYards.push(parseFloat(year.skills[0].yards));
-							    					recievingYards.push(parseFloat(year.skills[1].yards));
+							    					yearLabels.push(year.season);
+							    					yearRushTds.push(parseFloat(year.skills[0].touchdowns));
+							    					yearRecievingTds.push(parseFloat(year.skills[1].touchdowns));
+							    					yearRushYards.push(parseFloat(year.skills[0].yards));
+							    					yearRecievingYards.push(parseFloat(year.skills[1].yards));
 							    				});
-							    				const tdData = {
-							    					labels: labels,
+							    				let gameLabels = [];
+							    				let perGameRushTds = [];
+							    				let perGameRecievingTds = [];
+							    				let perGameRecievingYards = [];
+							    				let perGameRushYards = [];
+							    				this.state.logs.games.forEach(game => {
+							    					gameLabels.push(game.opp);
+							    					perGameRushTds.push(parseFloat(game.stats.rushing.touchdowns));
+							    					perGameRecievingTds.push(parseFloat(game.stats.recieving.touchdowns));
+							    					perGameRecievingYards.push(parseFloat(game.stats.recieving.yards));
+							    					perGameRushYards.push(parseFloat(game.stats.rushing.yards));
+							    				});
+							    				const yearTdData = {
+							    					labels: yearLabels,
 							    					datasets: [{
 							    						label: 'Rushing Touchdowns',
 							    						backgroundColor: 'rgba(255,99,132,0.2)',
@@ -202,7 +217,7 @@ class PlayerInfoModal extends Component {
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
 												        hoverBorderColor: 'rgba(255,99,132,1)',
-							    						data: rushTds						 
+							    						data: yearRushTds						 
 							    					}, {
 							    						label: 'Recieving Touchdowns',
 							    						backgroundColor: 'rgba(75,192,192,0.4)',
@@ -210,11 +225,11 @@ class PlayerInfoModal extends Component {
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
 												        hoverBorderColor: 'rgba(75,192,192,1)',
-							    						data: recievingTds						 
+							    						data: yearRecievingTds						 
 							    					}]
 							    				};
-							    				const yardData = {
-							    					labels: labels,
+							    				const yearYardData = {
+							    					labels: yearLabels,
 							    					datasets: [{
 							    						label: 'Rushing Yards',
 							    						backgroundColor: 'rgba(255,99,132,0.2)',
@@ -222,7 +237,7 @@ class PlayerInfoModal extends Component {
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
 												        hoverBorderColor: 'rgba(255,99,132,1)',
-							    						data: rushYards						 
+							    						data: yearRushYards						 
 							    					}, {
 							    						label: 'Recieving Yards',
 							    						backgroundColor: 'rgba(75,192,192,0.4)',
@@ -230,36 +245,96 @@ class PlayerInfoModal extends Component {
 												        borderWidth: 1,
 												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
 												        hoverBorderColor: 'rgba(75,192,192,1)',
-							    						data: recievingYards						 
+							    						data: yearRecievingYards						 
+							    					}]
+							    				};
+							    				const gameTdData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Rushing Touchdowns',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: perGameRushTds						 
+							    					}, {
+							    						label: 'Recieving Touchdowns',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: perGameRecievingTds						 
+							    					}]
+							    				};
+							    				const gameYardData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Rushing Yards',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: perGameRushYards						 
+							    					}, {
+							    						label: 'Recieving Yards',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: perGameRecievingYards						 
 							    					}]
 							    				};
 							    				return (
 							    					<Grid container>
-						    							<Grid item sm={6}>
-							    							<Bar data={tdData}/>
-							    						</Grid>
-							    						<Grid item sm={6}>
-							    							<Bar data={yardData}/>
-							    						</Grid>
+							    						<h4>Career Stats</h4>
+								    					<Grid container>
+							    							<Grid item sm={6}>
+								    							<Bar data={yearTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Bar data={yearYardData}/>
+								    						</Grid>
+								    					</Grid>
+								    					<h4>{this.state.info.career[cur].season} Per Game Stats</h4>
+								    					<Grid container>
+								    						<Grid item sm={6}>
+								    							<Bar data={gameTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Bar data={gameYardData}/>
+								    						</Grid>
+								    					</Grid>
 							    					</Grid>
 							    				);
 							    			} else if (this.props.playerInfo.pos === 'WR' || this.props.playerInfo.pos === 'TE') {
-							    				let labels = [];
-							    				let recievingTds = [];
-							    				let recievingYards = [];
+							    				let yearLabels = [];
+							    				let yearRecievingTds = [];
+							    				let yearRecievingYards = [];
 							    				this.state.info.career.forEach(year => {
-							    					labels.push(year.season);							    					
-							    					recievingTds.push(parseFloat(year.skills[0].touchdowns));
-							    					recievingYards.push(parseFloat(year.skills[0].yards));
+							    					yearLabels.push(year.season);							    					
+							    					yearRecievingTds.push(parseFloat(year.skills[0].touchdowns));
+							    					yearRecievingYards.push(parseFloat(year.skills[0].yards));
 							    				});
-							    				const tdData = {
-							    					labels: labels,
+							    				let gameLabels = [];
+							    				let perGameRecievingTds = [];
+							    				let perGameRecievingYards = [];
+							    				this.state.logs.games.forEach(game => {
+							    					gameLabels.push(game.opp);
+							    					perGameRecievingTds.push(parseFloat(game.stats.recieving.touchdowns));
+							    					perGameRecievingYards.push(parseFloat(game.stats.recieving.yards));
+							    				});
+							    				const yearTdData = {
+							    					labels: yearLabels,
 							    					datasets: [{
 							    						label: 'Recieving Touchdowns',
 							    						fill: false,
 												        lineTension: 0.1,
-												        backgroundColor: 'rgba(75,192,192,0.4)',
-												        borderColor: 'rgba(75,192,192,1)',
+												        backgroundColor: '#90caf9',
+												        borderColor: '#42a5f5',
 												        borderCapStyle: 'butt',
 												        borderDash: [],
 												        borderDashOffset: 0.0,
@@ -273,17 +348,17 @@ class PlayerInfoModal extends Component {
 												        pointHoverBorderWidth: 2,
 												        pointRadius: 1,
 												        pointHitRadius: 10,
-							    						data: recievingTds						 
+							    						data: yearRecievingTds						 
 							    					}]
 							    				};
-							    				const yardData = {
-							    					labels: labels,
+							    				const yearYardData = {
+							    					labels: yearLabels,
 							    					datasets: [{
 							    						label: 'Recieving Yards',
 							    						fill: false,
 												        lineTension: 0.1,
-												        backgroundColor: 'rgba(75,192,192,0.4)',
-												        borderColor: 'rgba(75,192,192,1)',
+												        backgroundColor: '#90caf9',
+												        borderColor: '#42a5f5',
 												        borderCapStyle: 'butt',
 												        borderDash: [],
 												        borderDashOffset: 0.0,
@@ -297,32 +372,110 @@ class PlayerInfoModal extends Component {
 												        pointHoverBorderWidth: 2,
 												        pointRadius: 1,
 												        pointHitRadius: 10,
-							    						data: recievingYards						 
+							    						data: yearRecievingYards						 
+							    					}]
+							    				};
+							    				const gameTdData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Recieving Touchdowns',
+							    						fill: false,
+												        lineTension: 0.1,
+												        backgroundColor: '#2196f3',
+												        borderColor: '#1976d2',
+												        borderCapStyle: 'butt',
+												        borderDash: [],
+												        borderDashOffset: 0.0,
+												        borderJoinStyle: 'miter',
+												        pointBorderColor: 'rgba(75,192,192,1)',
+												        pointBackgroundColor: '#fff',
+												        pointBorderWidth: 1,
+												        pointHoverRadius: 5,
+												        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+												        pointHoverBorderColor: 'rgba(220,220,220,1)',
+												        pointHoverBorderWidth: 2,
+												        pointRadius: 1,
+												        pointHitRadius: 10,
+							    						data: perGameRecievingTds						 
+							    					}]
+							    				};
+							    				const gameYardData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Recieving Yards',
+							    						fill: false,
+												        lineTension: 0.1,
+												        backgroundColor: '#2196f3',
+												        borderColor: '#1976d2',
+												        borderCapStyle: 'butt',
+												        borderDash: [],
+												        borderDashOffset: 0.0,
+												        borderJoinStyle: 'miter',
+												        pointBorderColor: 'rgba(75,192,192,1)',
+												        pointBackgroundColor: '#fff',
+												        pointBorderWidth: 1,
+												        pointHoverRadius: 5,
+												        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+												        pointHoverBorderColor: 'rgba(220,220,220,1)',
+												        pointHoverBorderWidth: 2,
+												        pointRadius: 1,
+												        pointHitRadius: 10,
+							    						data: perGameRecievingYards						 
 							    					}]
 							    				};
 							    				return (
 							    					<Grid container>
-						    							<Grid item sm={6}>
-							    							<Line data={tdData}/>
-							    						</Grid>
-							    						<Grid item sm={6}>
-							    							<Line data={yardData}/>
-							    						</Grid>
-							    					</Grid>
+							    						<h4>Career Stats</h4>
+								    					<Grid container>
+							    							<Grid item sm={6}>
+								    							<Line data={yearTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Line data={yearYardData}/>
+								    						</Grid>
+								    					</Grid>
+								    					<h4>{this.state.info.career[cur].season} Per Game Stats</h4>
+								    					<Grid container>
+															<Grid item sm={6}>
+								    							<Line data={gameTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Line data={gameYardData}/>
+								    						</Grid>
+								    					</Grid>
+								    				</Grid>
 							    				);
 							    			} else if (this.props.playerInfo.pos === 'QB') {
-												let labels = [];
-							    				let recievingTds = [];
-							    				let yards = [];
+												let yearLabels = [];
+							    				let yearPassingTds = [];
+							    				let yearPassingYards = [];
 							    				this.state.info.career.forEach(year => {
-							    					labels.push(year.season);							    					
-							    					recievingTds.push(parseFloat(year.skills[2].touchdowns));
-							    					yards.push(parseFloat(year.skills[2].yards));
+							    					yearLabels.push(year.season);							    					
+							    					yearPassingTds.push(parseFloat(year.skills[2].touchdowns));
+							    					yearPassingYards.push(parseFloat(year.skills[2].yards));
 							    				});
-							    				const tdData = {
-							    					labels: labels,
+							    				let gameLabels = [];
+							    				let perGamePassTds = [];
+							    				let perGameRushTds = [];
+							    				let perGamePassYards = [];
+							    				let perGameRushYards = [];
+							    				let perGamePicks = [];
+							    				let perGameQBR = [];
+							    				let perGameSacked = [];
+							    				this.state.logs.games.forEach(game => {
+							    					gameLabels.push(game.opp);
+							    					perGameRushTds.push(parseFloat(game.stats.rushing.touchdowns));
+							    					perGamePassTds.push(parseFloat(game.stats.passing.touchdowns));
+							    					perGamePassYards.push(parseFloat(game.stats.passing.yards));
+							    					perGameRushYards.push(parseFloat(Math.abs(game.stats.rushing.yards)));
+							    					perGamePicks.push(parseFloat(game.stats.passing.interceptions));
+							    					perGameQBR.push(parseFloat(game.stats.passing.qbr));
+							    					perGameSacked.push(parseFloat(game.stats.passing.sacked));
+							    				});
+							    				const yearTdData = {
+							    					labels: yearLabels,
 							    					datasets: [{
-							    						label: 'Thrown Touchdowns',
+							    						label: 'Passing Touchdowns',
 							    						fill: false,
 												        lineTension: 0.1,
 												        backgroundColor: 'rgba(75,192,192,0.4)',
@@ -340,13 +493,13 @@ class PlayerInfoModal extends Component {
 												        pointHoverBorderWidth: 2,
 												        pointRadius: 1,
 												        pointHitRadius: 10,
-							    						data: recievingTds						 
+							    						data: yearPassingTds						 
 							    					}]
 							    				};
-							    				const yardData = {
-							    					labels: labels,
+							    				const yearYardData = {
+							    					labels: yearLabels,
 							    					datasets: [{
-							    						label: 'Throwing Yards',
+							    						label: 'Passing Yards',
 							    						fill: false,
 												        lineTension: 0.1,
 												        backgroundColor: 'rgba(75,192,192,0.4)',
@@ -364,18 +517,122 @@ class PlayerInfoModal extends Component {
 												        pointHoverBorderWidth: 2,
 												        pointRadius: 1,
 												        pointHitRadius: 10,
-							    						data: yards					 
+							    						data: yearPassingYards					 
 							    					}]
 							    				}
+							    				const gameQBRData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'QBR',
+							    						fill: false,
+												        lineTension: 0.1,
+												        backgroundColor: 'rgba(75,192,192,0.4)',
+												        borderColor: 'rgba(75,192,192,1)',
+												        borderCapStyle: 'butt',
+												        borderDash: [],
+												        borderDashOffset: 0.0,
+												        borderJoinStyle: 'miter',
+												        pointBorderColor: 'rgba(75,192,192,1)',
+												        pointBackgroundColor: '#fff',
+												        pointBorderWidth: 1,
+												        pointHoverRadius: 5,
+												        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+												        pointHoverBorderColor: 'rgba(220,220,220,1)',
+												        pointHoverBorderWidth: 2,
+												        pointRadius: 1,
+												        pointHitRadius: 10,
+							    						data: perGameQBR					 
+							    					}]
+							    				}
+							    				const gamePickSackData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Times Sacked',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: perGameSacked						 
+							    					}, {
+							    						label: 'Times Picked',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: perGamePicks						 
+							    					}]
+							    				};
+							    				const gameTdData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Rushing Touchdowns',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: perGameRushTds
+							    					}, {
+							    						label: 'Passing Touchdowns',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: perGamePassTds		 
+							    					}]
+							    				};
+							    				const gameYardData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Rushing Yards',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: perGameRushYards						 
+							    					}, {
+							    						label: 'Passing Yards',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: perGamePassYards						 
+							    					}]
+							    				};
 							    				return (
 							    					<Grid container>
-						    							<Grid item sm={6}>
-							    							<Line data={tdData}/>
-							    						</Grid>
-							    						<Grid item sm={6}>
-							    							<Line data={yardData}/>
-							    						</Grid>
-							    					</Grid>
+							    						<h4>Career Stats</h4>
+								    					<Grid container>
+							    							<Grid item sm={6}>
+								    							<Line data={yearTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Line data={yearYardData}/>
+								    						</Grid>
+								    					</Grid>
+								    					<h4>{this.state.info.career[cur].season} Per Game Stats</h4>
+								    					<Grid container>
+															<Grid item sm={6}>
+								    							<Bar data={gameTdData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Bar data={gameYardData}/>
+								    						</Grid>
+								    					</Grid>
+								    					<Grid container>
+															<Grid item sm={6}>
+								    							<Bar data={gamePickSackData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Line data={gameQBRData}/>
+								    						</Grid>
+								    					</Grid>
+								    				</Grid>
 							    				);
 							    			} else if (this.props.playerInfo.pos === 'PK') {					    					
 							    				let extra = [];
@@ -523,7 +780,89 @@ class PlayerInfoModal extends Component {
 								    				</Grid>
 							    				);
 							    			} else if (this.props.playerInfo.pos === 'DEF') {
-							    							
+							    				let gameLabels = [];
+							    				let pointsAllowed = [];
+							    				let sacks = [];
+							    				let picks = [];
+							    				this.state.logs.games.forEach(game => {
+							    					gameLabels.push(game.opp);
+							    					pointsAllowed.push(parseFloat(game.points_allowed));
+							    					sacks.push(parseFloat(game.sacks));
+							    					picks.push(parseFloat(game.interceptions));
+							    				});
+							    				const pickedSackedData = {
+							    					labels: gameLabels,
+							    					datasets: [{
+							    						label: 'Interceptions',
+							    						backgroundColor: 'rgba(255,99,132,0.2)',
+												        borderColor: 'rgba(255,99,132,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+												        hoverBorderColor: 'rgba(255,99,132,1)',
+							    						data: picks						 
+							    					}, {
+							    						label: 'Sacks',
+							    						backgroundColor: 'rgba(75,192,192,0.4)',
+      													borderColor: 'rgba(75,192,192,1)',
+												        borderWidth: 1,
+												        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+												        hoverBorderColor: 'rgba(75,192,192,1)',
+							    						data: sacks						 
+							    					}]
+							    				};
+							    				// const pointsAllowedData = {
+							    				// 	labels: gameLabels,
+							    				// 	datasets: [{
+							    				// 		label: 'Points Allowed',
+							    				// 		fill: false,
+												   //      lineTension: 0.1,
+												   //      backgroundColor: 'rgba(75,192,192,0.4)',
+												   //      borderColor: 'rgba(75,192,192,1)',
+												   //      borderCapStyle: 'butt',
+												   //      borderDash: [],
+												   //      borderDashOffset: 0.0,
+												   //      borderJoinStyle: 'miter',
+												   //      pointBorderColor: 'rgba(75,192,192,1)',
+												   //      pointBackgroundColor: '#fff',
+												   //      pointBorderWidth: 1,
+												   //      pointHoverRadius: 5,
+												   //      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+												   //      pointHoverBorderColor: 'rgba(220,220,220,1)',
+												   //      pointHoverBorderWidth: 2,
+												   //      pointRadius: 1,
+												   //      pointHitRadius: 10,
+							    				// 		data: pointsAllowed					 
+							    				// 	}]
+							    				// };
+
+							    				const pointsAllowedData = {
+							    					labels: gameLabels,
+							    					datasets: [  {
+												    	label: 'Points Allowed',
+												      	backgroundColor: 'rgba(179,181,198,0.2)',
+												      	borderColor: 'rgba(179,181,198,1)',
+												      	pointBackgroundColor: 'rgba(179,181,198,1)',
+												      	pointBorderColor: '#fff',
+												      	pointHoverBackgroundColor: '#fff',
+												      	pointHoverBorderColor: 'rgba(179,181,198,1)',
+												      	data: pointsAllowed
+												    }]
+							    				}
+
+
+							    				return (
+							    					<Grid container>							    					
+								    					<h4>2018 Per Game Stats</h4>
+								    					<Grid container>
+															<Grid item sm={6}>
+								    							<Bar data={pickedSackedData}/>
+								    						</Grid>
+								    						<Grid item sm={6}>
+								    							<Radar data={pointsAllowedData}/>
+								    						</Grid>
+								    					</Grid>
+								    				</Grid>
+							    				);
 							    			}
 						    			})()
 						    		}
